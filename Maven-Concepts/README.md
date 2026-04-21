@@ -2,7 +2,7 @@
 
 ## 📌 Overview
 
-This project covers the basics of **Apache Maven**, including installation, project creation, and build lifecycle.
+This project covers the basics of **Apache Maven**, including installation, project creation, build lifecycle, and both **Standalone (JAR)** and **Web Application (WAR)** setups.
 
 ---
 
@@ -50,21 +50,23 @@ mvn -v
 
 ---
 
-## 📁 Maven Project Creation
+# 📁 Maven Project Creation
 
-### 🔹 Command Used
+## 🔹 1. Standalone Java Project (JAR)
+
+### Command Used
 
 ```bash
 mvn archetype:generate
 ```
 
-### 🔹 Archetype Selected
+### Archetype Selected
 
 ```
 org.apache.maven.archetypes:maven-archetype-quickstart
 ```
 
-### 🔹 Project Details
+### Project Details
 
 ```
 groupId: com.akshat
@@ -73,7 +75,7 @@ artifactId: akshat-app
 
 ---
 
-## 📂 Project Structure
+## 📂 Project Structure (Standalone)
 
 ```
 akshat-app/
@@ -85,11 +87,67 @@ akshat-app/
 
 ---
 
+## 📦 Build Output (JAR)
+
+```
+target/
+ ├── classes/
+ ├── test-classes/
+ └── akshat-app-1.0-SNAPSHOT.jar
+```
+
+---
+
+## 🔹 2. Java Web Application (WAR)
+
+### Command Used
+
+```bash
+mvn archetype:generate
+```
+
+### Archetype Selected
+
+```
+org.apache.maven.archetypes:maven-archetype-webapp
+```
+
+### Version Used
+
+```
+1.5
+```
+
+### Project Details
+
+```
+groupId: com.akshat
+artifactId: akshat-web-app
+```
+
+---
+
+## 📂 Project Structure (Web App)
+
+```
+akshat-web-app/
+ ├── pom.xml
+ └── src/
+     └── main/
+         └── webapp/
+             ├── index.jsp
+             └── WEB-INF/
+                 └── web.xml
+```
+
+---
+
 ## 🧠 Important Concepts
 
-### 🔹 POM File (`pom.xml`)
+## 🔹 POM File (`pom.xml`)
 
-* Project Object Model
+* Stands for Project Object Model
+* Heart of Maven project
 * Contains:
 
   * Project metadata
@@ -99,7 +157,7 @@ akshat-app/
 
 ---
 
-### 🔹 Maven Lifecycle
+## 🔹 Maven Lifecycle
 
 | Phase   | Description                  |
 | ------- | ---------------------------- |
@@ -111,21 +169,30 @@ akshat-app/
 
 ---
 
-## 📦 Target Folder
+## 🔹 Packaging Types
 
-* Created after running build commands
+### JAR (Java Archive)
+
+* Used for standalone applications
+* Output: `.jar`
+
+### WAR (Web Archive)
+
+* Used for web applications
+* Output: `.war`
+
+---
+
+## 🔹 Target Folder
+
+* Created after build commands
 * Contains compiled code and final output
-
-```
-target/
- ├── classes/
- ├── test-classes/
- └── akshat-app-1.0-SNAPSHOT.jar
-```
 
 ---
 
 ## ▶️ Commands Used
+
+### Standalone Project
 
 ```bash
 # Create project
@@ -143,11 +210,48 @@ mvn clean install
 
 ---
 
+### Web Application
+
+```bash
+# Navigate into project
+cd akshat-web-app
+
+# Build WAR file
+mvn clean package
+
+# Install project
+mvn clean install
+```
+
+---
+
+## 🌐 Deployment (Web App)
+
+To run the web application:
+
+1. Install Apache Tomcat
+2. Copy `.war` file into:
+
+```
+tomcat/webapps/
+```
+
+3. Start server
+4. Open browser:
+
+```
+http://localhost:8080/akshat-web-app
+```
+
+---
+
 ## ❗ Important Notes
 
 * Maven commands must be run **inside the project folder**
 * `pom.xml` is required to execute build commands
-* No plugin is needed to create the `target` folder
+* No plugin is required to create `target` folder
+* `WEB-INF` folder is not directly accessible
+* Web app uses **Servlet + JSP (traditional approach)**
 
 ---
 
@@ -157,6 +261,8 @@ mvn clean install
 * Standard project structure is followed
 * Dependencies are managed automatically
 * Build lifecycle handles compilation and packaging
+* Difference between **JAR vs WAR** understood
+* Basics of **Java Web Application structure**
 
-
+---
 
