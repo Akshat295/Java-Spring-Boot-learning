@@ -23,14 +23,15 @@ public class StudentController {
 
     @PostMapping("/create")
     public ResponseEntity<Student> createStudent(@RequestBody Student student) {
+        student.setDeleted(false);
         Student createdStudent = studentService.createStudent(student) ;
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(createdStudent);
     }
 
-    @GetMapping("/get/{id}")
-    public ResponseEntity<Student> getStudent(@PathVariable Long id) {
+    @GetMapping("/get")
+    public ResponseEntity<Student> getStudent(@RequestParam Long id) {
         Student studentResp = studentService.getStudent(id) ;
 
         if (studentResp == null) {
@@ -55,8 +56,8 @@ public class StudentController {
                 .body(studentList);
     }
 
-    @PutMapping("/update/{id}")
-    public ResponseEntity<Student> updateStudent(@PathVariable Long id, @RequestBody Student studentReq) {
+    @PutMapping("/update")
+    public ResponseEntity<Student> updateStudent(@RequestParam Long id, @RequestBody Student studentReq) {
         Student studentResp = studentService.updateStudent(id,studentReq) ;
 
         if (studentResp == null) {
@@ -68,8 +69,8 @@ public class StudentController {
                 .body(studentResp);
     }
 
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<String> deleteStudent(@PathVariable Long id) {
+    @DeleteMapping("/delete")
+    public ResponseEntity<String> deleteStudent(@RequestParam Long id) {
         Boolean isDeleted = studentService.deleteStudent(id);
 
         if (!isDeleted) {
@@ -78,5 +79,12 @@ public class StudentController {
         return ResponseEntity.status(HttpStatus.OK).body("Student with id " + id + " was deleted successfully");
     }
 
-
+    @PatchMapping("/delete-soft")
+    public ResponseEntity<String> deleteStudentSoftly(@RequestParam Long id) {
+        Boolean isDeleted = studentService.deleteStudentSoftly(id) ;
+        if (!isDeleted) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        return ResponseEntity.status(HttpStatus.OK).body("Student with id " + id + " was deleted successfully");
+    }
 }
